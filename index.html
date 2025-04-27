@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AbdoXbhir</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #1d2b64, #f8cdda);
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+    .container { text-align: center; }
+    .profile-pic {
+      width: 170px; height: 170px; border-radius: 50%; overflow: hidden;
+      border: 5px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      margin-bottom: 25px; animation: float 3s ease-in-out infinite;
+    }
+    .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    .social-icons {
+      display: flex; justify-content: center; gap: 22px; flex-wrap: wrap;
+    }
+    .icon {
+      width: 70px; height: 70px; background: white; border-radius: 20px;
+      display: flex; justify-content: center; align-items: center;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.3); cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s; position: relative;
+    }
+    .icon:hover { transform: scale(1.25); box-shadow: 0 14px 20px rgba(0,0,0,0.35); }
+    .icon img { width: 32px; height: 32px; }
+    .burst { position: absolute; top: 50%; left: 50%; pointer-events: none; }
+    .burst img {
+      width: 18px; height: 18px; position: absolute; animation: explode 0.7s forwards;
+    }
+    @keyframes explode {
+      0% { transform: translate(0,0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--x), var(--y)) scale(0.5); opacity: 0; }
+    }
+    h1 {
+      color: white; font-size: 30px; margin-bottom: 20px; letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+<audio id="popSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_50b512e76f.mp3"></audio>
+
+<div class="container">
+  <h1>AbdoXbhir</h1>
+  <div class="profile-pic">
+    <img src="https://i.pinimg.com/564x/60/84/f5/6084f55b0e6d52cb9a8e7fc16d2b0eb2.jpg" alt="غامض">
+  </div>
+
+  <div class="social-icons">
+    <div class="icon" data-link="https://t.me/Abdulrauf_bhir">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">
+    </div>
+    <div class="icon" data-link="https://www.instagram.com/abdo_x_bhir_200x?igsh=ejRpa2RuanA5c3Q=">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+    </div>
+    <div class="icon" data-link="https://www.facebook.com/share/1BZNQoXgSY/?mibextid=qi2Omg">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+    </div>
+    <div class="icon" data-link="https://tiktok.com/@abdo_2abdo">
+      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok">
+    </div>
+    <div class="icon" data-link="https://www.snapchat.com/add/abdo.bhir?share_id=x96pGmWwGdA&locale=ar-IT-u-nu-latn">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733614.png" alt="Snapchat">
+    </div>
+  </div>
+</div>
+
+<script>
+  const icons = document.querySelectorAll('.icon');
+  const sound = document.getElementById('popSound');
+
+  icons.forEach(icon => {
+    icon.addEventListener('click', e => {
+      const link = icon.getAttribute('data-link');
+      window.open(link, '_blank');
+
+      sound.currentTime = 0;
+      sound.play();
+
+      for (let i = 0; i < 10; i++) {
+        const burst = document.createElement('div');
+        burst.classList.add('burst');
+        const img = document.createElement('img');
+        img.src = icon.querySelector('img').src;
+        const angle = Math.random() * 2 * Math.PI;
+        const radius = 60 + Math.random() * 40;
+        img.style.setProperty('--x', `${Math.cos(angle) * radius}px`);
+        img.style.setProperty('--y', `${Math.sin(angle) * radius}px`);
+        burst.appendChild(img);
+        icon.appendChild(burst);
+
+        setTimeout(() => {
+          burst.remove();
+        }, 700);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
